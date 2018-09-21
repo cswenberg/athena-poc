@@ -17,7 +17,7 @@ This repo does not contain the AWS keys needed to put data to S3. For access to 
 
 Use:
 
-In the project directory, execute the app by running 'node index.js <desired-filename>'.
+In the project directory, execute the app by running 'node chronicle.js'.
 A file, <desired-filename>.parquet, will be created and placed in the current directory and is populated with sample data.
 This parquet file will also be PUT to the S3 bucket 'appdev-register' in the 'testing' folder.
 
