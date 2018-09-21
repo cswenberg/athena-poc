@@ -1,3 +1,4 @@
+
 let AWS = require('aws-sdk')
 let parquet = require('parquetjs')
 let fs = require('fs')
@@ -20,6 +21,7 @@ class ChronicleLogging {
     this.s3 = new AWS.S3()
     console.log('done constructing')
   }
+
   async makeParquet(eventType) {
     this.fileName = `${Date.now()}_chronicle_testing.parquet`
     let schema = new parquet.ParquetSchema(eventType)

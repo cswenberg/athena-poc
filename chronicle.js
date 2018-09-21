@@ -1,20 +1,13 @@
 
 const keys = require('./keys.js')
+const generator = require('./samples.js')
 let ChronicleLogging = require('./ChronicleLogging.js')
 
 const bucket = 'appdev-register'
-const sampleLog = {
-  app: 'Ithaca Transit',
-  date: Date.now(),
-  user: 'Conner Swenberg',
-  bus: 69,
-  distance: 17.38,
-  json: {"eventType": "bus query", "event": "search bus 69"}
-}
+let chronicleTransit = new ChronicleLogging(keys.accessKey, keys.secretKey, 'Ithaca Transit', bucket)
+let chroniclePollo = new ChronicleLogging(keys.accessKey, keys.secretKey, 'Pollo', bucket)
 
-let chronicle = new ChronicleLogging(keys.accessKey, keys.secretKey, 'testing', bucket)
-
-const schema = {
+const schemaTransit = {
   app: { type: 'UTF8' },
   date: { type: 'INT64' },
   user: { type: 'UTF8' },
@@ -22,7 +15,20 @@ const schema = {
   distance: { type: 'FLOAT' },
   json: { type: 'JSON' }
 }
+const schemaPollo = {
+  app: { type: 'UTF8' },
+  date: { type: 'INT64' },
+  user: { type: 'UTF8' },
+  podcast: { type: 'UTF8' },
+  duration: { type: 'FLOAT' },
+  json: { type: 'JSON' }
+}
+
+let logs = generator.generateLogs()
+const transit = logs.transit
+const pollo = logs.pollo
 
 for (i=0; i<10; i++) {
-  chronicle.makeLog('route query', schema, sampleLog)
+  chronicleTransit.makeLog('route query', schemaTransit, transit[i])
+  chroniclePollo.makeLog('podcast post', schemaPollo, pollo[i])
 }
